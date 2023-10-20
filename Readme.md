@@ -99,7 +99,9 @@ def logout_user
 
 def register_user
 
-## Define post, comment models
+## Define article, comment models
 
 class Article
 clss Comment
+
+## Define views of article, comment
