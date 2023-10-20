@@ -69,6 +69,8 @@ path('', include('website.urls')),
 
 ## Create the templates folder in the website folder
 
+mkdir templates
+
 ## Create html pages in the templates folder
 
 create home.html
@@ -76,3 +78,22 @@ create home.html
 ## Create new views in views.py of the website folder 
 
 def home
+
+## Personalize views, add navbar.html and base.html files in the template folder
+
+{% extends base.html %}
+
+{%% include 'navbar.html' %}
+
+## Use Django predefined login to make login page
+
+from django.contrib.auth import authenticate, login
+
+## Make the logout function
+
+def logout_user
+
+## Create the form to register in the file forms.py and create the corresponding functions and view
+
+def register_user
+
