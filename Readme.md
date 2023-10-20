@@ -66,7 +66,7 @@ path('', include('website.urls')),
  urlpatterns = [
 
      path('', views.name_of_the_view, name='name_of_the_view'),
-     
+
  ]
 
 ## Create the templates folder in the website folder
@@ -99,3 +99,7 @@ def logout_user
 
 def register_user
 
+## Define post, comment models
+
+class Article
+clss Comment
