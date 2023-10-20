@@ -64,7 +64,9 @@ path('', include('website.urls')),
 ## Create a urls.py in website folder and add urls of views
 
  urlpatterns = [
+
      path('', views.name_of_the_view, name='name_of_the_view'),
+     
  ]
 
 ## Create the templates folder in the website folder
@@ -83,7 +85,7 @@ def home
 
 {% extends base.html %}
 
-{%% include 'navbar.html' %}
+{% include 'navbar.html' %}
 
 ## Use Django predefined login to make login page
 
