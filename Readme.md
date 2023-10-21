@@ -105,3 +105,7 @@ class Article
 clss Comment
 
 ## Define views of article, comment
+
+{% for article in articles %}
+{% endfor %}
+
