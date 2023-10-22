@@ -44,5 +44,6 @@ class AddArticleForm(forms.ModelForm):
         widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content'})
     )
     image = forms.ImageField(
+         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
