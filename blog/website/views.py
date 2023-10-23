@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth  import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm, AddArticleForm
-from .models import Article
+from .forms import SignUpForm, AddArticleForm, CommentForm
+from .models import Article, Comment
 
 # Create your views here.
 
@@ -60,8 +60,20 @@ def add_article(request):
 
 def article_detail(request, pk):
     if request.user.is_authenticated:
-        article_detail = Article.objects.get(id=pk)
-        return render(request, 'article.html', {'article_detail': article_detail})
+        article = get_object_or_404(Article, id=pk)
+        comments = Comment.objects.filter(article=article)
+        comment_form = CommentForm()
+
+        if request.method == 'POST':
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                new_comment = comment_form.save(commit=False)
+                new_comment.article = article
+                new_comment.author = request.user
+                new_comment.save()
+                comment_form = CommentForm()  # Clear the form
+
+        return render(request, 'article.html', {'article': article, 'comments': comments, 'comment_form': comment_form})
     else:
         messages.error(request, "You must be logged in to view that page...")
         return redirect('home')

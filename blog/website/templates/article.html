@@ -3,15 +3,32 @@
 {% block content %}
 <div class="container">
     <div class="card">
-        {% if article_detail.image %}
-        <img src="{{ article_detail.image.url }}" class="card-img-top" alt="{{ article_detail.title }}">
+        {% if article.image %}
+        <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}">
         {% endif %}
         <div class="card-body">
-            <h2 class="card-title">{{ article_detail.title }}</h2>
-            <p class="card-text">{{ article_detail.content }}</p>
-            <p><strong>Author: </strong>{{ article_detail.author.username }}</p>
-            <p><strong>Published on: </strong>{{ article_detail.created_at|date:"F d, Y" }}</p>
+            <h2 class="card-title">{{ article.title }}</h2>
+            <p class="card-text">{{ article.content }}</p>
+            <p><strong>Author: </strong>{{ article.author.username }}</p>
+            <p><strong>Published on: </strong>{{ article.created_at|date:"F d, Y" }}</p>
         </div>
     </div>
+    <h2>Comments</h2>
+    {% for comment in comments %}
+        <div class="card">
+            <div class="card-body">
+                <p><strong>Author: </strong>{{ comment.author.username }}</p>
+                <p>{{ comment.text }}</p>
+                <p><strong>Posted on: </strong>{{ comment.created_at|date:"F d, Y H:i:s" }}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+    <h3>Add a Comment</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit" class="btn btn-primary">Add Comment</button>
+    </form>
 </div>
 {% endblock %}

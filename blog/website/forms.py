@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Article
+from .models import Article, Comment
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -47,3 +47,10 @@ class AddArticleForm(forms.ModelForm):
          required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
+
+class CommentForm(forms.ModelForm):
+    text = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter your comment here ;)'}))
+
+    class Meta:
+        model = Comment
+        fields = ['text']
