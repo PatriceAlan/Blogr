@@ -16,7 +16,7 @@ def home(request):
 
         if user is not None:
             login(request, user)
-            messages.success(request, "Login Successful. Welcome back !")
+            messages.success(request, f"Login Successful. Welcome back {username} !")
             return redirect('home')
         else:
             messages.error(request, "Login Failed. Please check your credentials and try again...")
@@ -56,4 +56,12 @@ def add_article(request):
         return render(request, 'add_article.html', {'form': article_form})
     else:
         messages.error(request, "You must be logged in to view that page.")
+        return redirect('home')
+
+def article_detail(request, pk):
+    if request.user.is_authenticated:
+        article_detail = Article.objects.get(id=pk)
+        return render(request, 'article.html', {'article_detail': article_detail})
+    else:
+        messages.error(request, "You must be logged in to view that page...")
         return redirect('home')

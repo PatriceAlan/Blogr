@@ -1,0 +1,5 @@
+body {
+    background-image: url('../images/top-view-office-desk-composition-with-copy-space.jpg'); /*Image by <a href="https://www.freepik.com/free-photo/top-view-office-desk-composition-with-copy-space_10571367.htm#query=blog%20background&position=49&from_view=keyword&track=ais">Freepik</a>*/
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents repeating the image */
+}

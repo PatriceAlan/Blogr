@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        {% if article_detail.image %}
+        <img src="{{ article_detail.image.url }}" class="card-img-top" alt="{{ article_detail.title }}">
+        {% endif %}
+        <div class="card-body">
+            <h2 class="card-title">{{ article_detail.title }}</h2>
+            <p class="card-text">{{ article_detail.content }}</p>
+            <p><strong>Author: </strong>{{ article_detail.author.username }}</p>
+            <p><strong>Published on: </strong>{{ article_detail.created_at|date:"F d, Y" }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
