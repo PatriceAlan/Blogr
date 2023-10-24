@@ -14,7 +14,6 @@
         </div>
     </div>
     <h2>Comments</h2>
-    {% if comment in comments%}
         {% for comment in comments %}
             <div class="card">
                 <div class="card-body">
@@ -24,11 +23,6 @@
                 </div>
             </div>
         {% endfor %}
-    {% else %}
-        <div class="card">
-            <marquee behavior="" direction="right">No comments yet, add some !</marquee>
-        </div>
-    {% endif %}
 
     <h3>Add a Comment</h3>
     <form method="post">
