@@ -3,6 +3,7 @@ from django.contrib.auth  import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddArticleForm, CommentForm
 from .models import Article, Comment
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -74,6 +75,21 @@ def article_detail(request, pk):
                 comment_form = CommentForm()  # Clear the form
 
         return render(request, 'article.html', {'article': article, 'comments': comments, 'comment_form': comment_form})
+    else:
+        messages.error(request, "You must be logged in to view that page...")
+        return redirect('home')
+
+def user_detail(request, pk):
+    if request.user.is_authenticated:
+        user_detail = get_object_or_404(User, id=pk)
+        articles = Article.objects.filter(author=user_detail)
+
+        context = {
+            'user_detail': user_detail,
+            'articles': articles,
+        }
+
+        return render(request, 'user_detail.html', context)
     else:
         messages.error(request, "You must be logged in to view that page...")
         return redirect('home')

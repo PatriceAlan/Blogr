@@ -8,7 +8,9 @@
         {% for article in articles %}
         <div class="card mb-2">
             <div class="card-header">
-                <small class="text-muted">Author: {{ article.author.username }}</small>
+                <small class="text-muted">
+                    Author: <a href="{% url 'user_detail' article.author.id %}">{{ article.author.username }}</a>
+                </small>
             </div>
             {% if article.image %}
             <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}">
@@ -21,6 +23,7 @@
             </div>
         </div>
         {% endfor %}
+        
 
     {% else %}
 
