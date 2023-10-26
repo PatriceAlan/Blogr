@@ -29,12 +29,11 @@ class ViewsTestCase(TestCase):
         )
         response = self.client.get(reverse("article_detail", args=[article.pk]))
         self.assertEqual(response.status_code, 302)
-        # self.assertTemplateUsed(response, "article.html")
 
     def test_user_detail_view(self):
         response = self.client.get(reverse("user_detail", args=[self.user.pk]))
         self.assertEqual(response.status_code, 302)
-        # self.assertTemplateUsed(response, "user_detail.html")
+
 
     def test_register_user_view(self):
         response = self.client.get(reverse("register"))
@@ -44,5 +43,5 @@ class ViewsTestCase(TestCase):
     def test_logout_user_view(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("logout"))
-        self.assertEqual(response.status_code, 302)  # Redirects to home
+        self.assertEqual(response.status_code, 302)
 
