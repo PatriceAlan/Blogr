@@ -28,8 +28,8 @@
     <form method="post">
         {% csrf_token %}
         {{ comment_form.as_p }}
-        <button type="submit" class="btn btn-primary">Add Comment</button>
-        <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+        <button type="submit" class="btn btn-success">Add Comment</button>
+        <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
     </form>
 </div>
 {% endblock %}
