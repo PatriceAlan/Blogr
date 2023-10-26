@@ -9,7 +9,7 @@
         <div class="card-body">
             <h2 class="card-title">{{ article.title }}</h2>
             <p class="card-text">{{ article.content }}</p>
-            <p><strong>Author: </strong>{{ article.author.username }}</p>
+            <p><strong>Author: </strong><a href="{% url 'user_detail' article.author.id %}">{{ article.author.username }}</a></p>
             <p><strong>Published on: </strong>{{ article.created_at|date:"F d, Y" }}</p>
         </div>
     </div>
@@ -17,7 +17,7 @@
         {% for comment in comments %}
             <div class="card">
                 <div class="card-body">
-                    <p><strong>Author: </strong>{{ comment.author.username }}</p>
+                    <p><strong>Author: </strong><a href="{% url 'user_detail' article.author.id %}">{{ comment.author.username }}</a></p>
                     <p>{{ comment.text }}</p>
                     <p><strong>Posted on: </strong>{{ comment.created_at|date:"F d, Y H:i:s" }}</p>
                 </div>
