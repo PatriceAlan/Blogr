@@ -6,7 +6,6 @@ from ..models import Article
 from django.contrib.auth.models import User
 from django.db.models import Q
 
-
 def home(request):
     search_query = request.GET.get('search_query')
     articles = Article.objects.all()
