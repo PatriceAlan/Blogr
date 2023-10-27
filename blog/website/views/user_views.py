@@ -17,10 +17,10 @@ def home(request):
         if user is not None:
             login(request, user)
             messages.success(request, f"Login Successful. Welcome back {username} !")
-            return redirect('user/home')
+            return redirect('home')
         else:
             messages.error(request, "Login Failed. Please check your credentials and try again...")
-            return redirect('user/home')
+            return redirect('home')
     else:
         return render(request, 'user/home.html', {'articles':articles})
 
@@ -29,7 +29,7 @@ def home(request):
 def logout_user(request):
     logout(request)
     messages.success(request, "Logout Successful. Don't hesitate to come again!")
-    return redirect('user/home')
+    return redirect('home')
 
 
 
@@ -39,7 +39,7 @@ def register_user(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Registration Successful ! You can now log in using your credentials.")
-            return redirect('user/home')
+            return redirect('home')
     else:
         form = SignUpForm()
     
@@ -59,4 +59,4 @@ def user_detail(request, pk):
         return render(request, 'user/user_detail.html', context)
     else:
         messages.error(request, "You must be logged in to view that page...")
-        return redirect('user/home')
+        return redirect('home')
