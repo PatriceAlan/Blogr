@@ -4,10 +4,17 @@ from django.contrib import messages
 from ..forms import SignUpForm
 from ..models import Article
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 def home(request):
+    search_query = request.GET.get('search_query')
     articles = Article.objects.all()
+
+    if search_query:
+        articles = articles.filter(
+            Q(title__icontains=search_query)
+        )
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -22,7 +29,7 @@ def home(request):
             messages.error(request, "Login Failed. Please check your credentials and try again...")
             return redirect('home')
     else:
-        return render(request, 'user/home.html', {'articles':articles})
+        return render(request, 'user/home.html', {'articles':articles, 'search_query': search_query})
 
 
 
@@ -60,3 +67,15 @@ def user_detail(request, pk):
     else:
         messages.error(request, "You must be logged in to view that page...")
         return redirect('home')
+
+def delete_user(request, pk):
+    if request.user.is_authenticated:
+        article_delete = get_object_or_404(Article, id=pk)
+        if article_delete.author == request.user:
+            article_delete.delete()
+            messages.success(request, "Article deleted successfully!")
+            return redirect('home')
+        else:
+            messages.error(request, "Something went wrong, try again later.")
+            return redirect('home')
+
