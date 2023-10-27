@@ -1,52 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth  import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm, AddArticleForm, CommentForm
-from .models import Article, Comment
-from django.contrib.auth.models import User
-
-
-
-def home(request):
-    articles = Article.objects.all()
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            messages.success(request, f"Login Successful. Welcome back {username} !")
-            return redirect('home')
-        else:
-            messages.error(request, "Login Failed. Please check your credentials and try again...")
-            return redirect('home')
-    else:
-        return render(request, 'home.html', {'articles':articles})
-
-
-
-def logout_user(request):
-    logout(request)
-    messages.success(request, "Logout Successful. Don't hesitate to come again!")
-    return redirect('home')
-
-
-
-def register_user(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Registration Successful ! You can now log in using your credentials.")
-            return redirect('home')
-    else:
-        form = SignUpForm()
-    
-    return render(request, 'register.html', {'form': form})
-
-
+from ..forms import AddArticleForm, CommentForm
+from ..models import Article, Comment
 
 def add_article(request):
     if request.user.is_authenticated:
@@ -81,15 +36,16 @@ def delete_article(request, pk):
 def update_article(request, pk):
     if request.user.is_authenticated:
         current_article = get_object_or_404(Article, id=pk)
-        article_form = AddArticleForm(request.POST or None, instance=current_article)
-        if article_form.is_valid():
-            article_form.save()
-            messages.success(request, "Article has been successfully updated !")
+        if current_article.author == request.user:
+            article_form = AddArticleForm(request.POST or None, instance=current_article)
+            if article_form.is_valid():
+                article_form.save()
+                messages.success(request, "Article has been successfully updated !")
+                return redirect('home')
+            return render(request, 'update_article.html', {'form':article_form})
+        else:
+            messages.error(request, "Something went wrong, try again later.")
             return redirect('home')
-        return render(request, 'update_article.html', {'form':article_form})
-    else:
-        messages.error(request, "Something went wrong, try again later.")
-        return redirect('home')
 
 def article_detail(request, pk):
     if request.user.is_authenticated:
@@ -107,23 +63,6 @@ def article_detail(request, pk):
                 comment_form = CommentForm()  # Clear the form
 
         return render(request, 'article.html', {'article': article, 'comments': comments, 'comment_form': comment_form})
-    else:
-        messages.error(request, "You must be logged in to view that page...")
-        return redirect('home')
-
-
-
-def user_detail(request, pk):
-    if request.user.is_authenticated:
-        user_detail = get_object_or_404(User, id=pk)
-        articles = Article.objects.filter(author=user_detail)
-
-        context = {
-            'user_detail': user_detail,
-            'articles': articles,
-        }
-
-        return render(request, 'user_detail.html', context)
     else:
         messages.error(request, "You must be logged in to view that page...")
         return redirect('home')

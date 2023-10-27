@@ -31,13 +31,14 @@ class SignUpForm(UserCreationForm):
 
 
 class AddArticleForm(forms.ModelForm):
+
     class Meta:
         model = Article
-        fields = ['title', 'content', 'image']  # Specify the fields from your Article model
+        fields = ['title', 'content', 'image'] 
 
     title = forms.CharField(
         required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}),  max_length=200
     )
     content = forms.CharField(
         required=True,
@@ -49,8 +50,10 @@ class AddArticleForm(forms.ModelForm):
     )
 
 class CommentForm(forms.ModelForm):
-    text = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter your comment here ;)'}))
+    text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your comment here ;)'}),
+                            max_length=200)
 
     class Meta:
         model = Comment
         fields = ['text']
+        
