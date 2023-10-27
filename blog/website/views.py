@@ -69,16 +69,27 @@ def add_article(request):
 
 def delete_article(request, pk):
     if request.user.is_authenticated:
-        article = get_object_or_404(Article, id=pk)
-        if article.author == request.user:
-            article.delete()
+        article_delete = get_object_or_404(Article, id=pk)
+        if article_delete.author == request.user:
+            article_delete.delete()
             messages.success(request, "Article deleted successfully!")
             return redirect('home')
         else:
-            messages.error(request, "You are not authorized to delete this article.")
+            messages.error(request, "Something went wrong, try again later.")
             return redirect('home')
 
-
+def update_article(request, pk):
+    if request.user.is_authenticated:
+        current_article = get_object_or_404(Article, id=pk)
+        article_form = AddArticleForm(request.POST or None, instance=current_article)
+        if article_form.is_valid():
+            article_form.save()
+            messages.success(request, "Article has been successfully updated !")
+            return redirect('home')
+        return render(request, 'update_article.html', {'form':article_form})
+    else:
+        messages.error(request, "Something went wrong, try again later.")
+        return redirect('home')
 
 def article_detail(request, pk):
     if request.user.is_authenticated:

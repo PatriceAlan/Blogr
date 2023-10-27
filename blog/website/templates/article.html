@@ -15,10 +15,14 @@
     </div>
 
     <br/>
+
     {% if request.user == article.author %}
+    <a href="{% url 'update_article' article.id %}" class="btn btn-warning">update</a>
+
     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Delete
     </button>
+
     
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
