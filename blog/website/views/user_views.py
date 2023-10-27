@@ -83,3 +83,19 @@ def delete_user(request, pk):
         messages.error(request, "You must be logged in to delete an account.")
     return redirect('home')
 
+
+def update_user(request, pk):
+    if request.user.is_authenticated:
+        current_account = get_object_or_404(User, id=pk)
+        if current_account == request.user:
+            user_form = SignUpForm(request.POST or None, instance=current_account)
+            if user_form.is_valid():
+                user_form.save()
+                messages.success(request, "Account has been successfully updated !")
+                return redirect('user_detail', pk=current_account.pk) 
+            
+            return render(request, 'user/update_user.html', {'form':user_form, 'current_account': current_account})
+        else:
+            messages.error(request, "Something went wrong, try again later.")
+            return redirect('home')
+

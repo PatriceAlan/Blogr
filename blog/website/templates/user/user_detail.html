@@ -28,7 +28,7 @@
         
     </div>
     <br/>
-    <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
+    <a href="{% url 'update_user' user.id %}" class="btn btn-warning">update</a>
     {% if request.user == user %}
     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
         Delete
@@ -51,7 +51,8 @@
             </div>
         </div>
     </div>
-    <br/>
+    <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
+    
 {% endif %}
     
 </div>

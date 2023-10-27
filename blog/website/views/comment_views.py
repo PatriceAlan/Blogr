@@ -18,17 +18,15 @@ def delete_comment(request, pk):
 
 def update_comment(request, pk):
     if request.user.is_authenticated:
-        current_comment = get_object_or_404(Comment, id=pk,)
+        current_comment = get_object_or_404(Comment, id=pk)
+        current_article = current_comment.article
         if current_comment.author == request.user:
             comment_form = CommentForm(request.POST or None, instance=current_comment)
             if comment_form.is_valid():
                 comment_form.save()
-                messages.success(request, "Comment has been successfully updated !")
-
-                article = current_comment.article
-                
-                return redirect('article_detail', pk=article.pk) 
-            return render(request, 'comment/update_comment.html', {'form':comment_form})
+                messages.success(request, "Comment has been successfully updated!")
+                return redirect('article_detail', pk=current_article.pk)
+            return render(request, 'comment/update_comment.html', {'form': comment_form, 'current_article': current_article})
         else:
             messages.error(request, "Something went wrong, try again later.")
             return redirect('home')

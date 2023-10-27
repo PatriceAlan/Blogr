@@ -43,10 +43,11 @@ def update_article(request, pk):
                 messages.success(request, "Article has been successfully updated !")
                 return redirect('article_detail', pk=current_article.pk) 
             
-            return render(request, 'article/update_article.html', {'form':article_form})
+            return render(request, 'article/update_article.html', {'form':article_form, 'current_article': current_article})
         else:
             messages.error(request, "Something went wrong, try again later.")
             return redirect('home')
+        
 
 def article_detail(request, pk):
     if request.user.is_authenticated:
