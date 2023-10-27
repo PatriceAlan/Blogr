@@ -5,7 +5,7 @@ from .forms import SignUpForm, AddArticleForm, CommentForm
 from .models import Article, Comment
 from django.contrib.auth.models import User
 
-# Create your views here.
+
 
 def home(request):
     articles = Article.objects.all()
@@ -25,10 +25,14 @@ def home(request):
     else:
         return render(request, 'home.html', {'articles':articles})
 
+
+
 def logout_user(request):
     logout(request)
     messages.success(request, "Logout Successful. Don't hesitate to come again!")
     return redirect('home')
+
+
 
 def register_user(request):
     if request.method == 'POST':
@@ -41,6 +45,8 @@ def register_user(request):
         form = SignUpForm()
     
     return render(request, 'register.html', {'form': form})
+
+
 
 def add_article(request):
     if request.user.is_authenticated:
@@ -58,6 +64,21 @@ def add_article(request):
     else:
         messages.error(request, "You must be logged in to view that page.")
         return redirect('home')
+
+
+
+def delete_article(request, pk):
+    if request.user.is_authenticated:
+        article = get_object_or_404(Article, id=pk)
+        if article.author == request.user:
+            article.delete()
+            messages.success(request, "Article deleted successfully!")
+            return redirect('home')
+        else:
+            messages.error(request, "You are not authorized to delete this article.")
+            return redirect('home')
+
+
 
 def article_detail(request, pk):
     if request.user.is_authenticated:
@@ -78,6 +99,8 @@ def article_detail(request, pk):
     else:
         messages.error(request, "You must be logged in to view that page...")
         return redirect('home')
+
+
 
 def user_detail(request, pk):
     if request.user.is_authenticated:
