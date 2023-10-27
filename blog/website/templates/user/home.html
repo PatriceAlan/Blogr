@@ -4,7 +4,12 @@
     {% if user.is_authenticated %}
 
         <h1>Blog Articles</h1>
-
+        <div class="card mb-5">
+            <form class="d-flex" action="" method="GET">
+                <input class="form-control" type="search" placeholder="Enter the title of the article" name="search_query" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
         {% for article in articles %}
         <div class="card mb-2">
             <div class="card-header">
