@@ -70,12 +70,16 @@ def user_detail(request, pk):
 
 def delete_user(request, pk):
     if request.user.is_authenticated:
-        article_delete = get_object_or_404(Article, id=pk)
-        if article_delete.author == request.user:
-            article_delete.delete()
-            messages.success(request, "Article deleted successfully!")
+        delete_account = get_object_or_404(User, id=pk)
+        if delete_account == request.user:
+            # Log out the user before deleting the account
+            logout(request)
+            delete_account.delete()
+            messages.success(request, "Account deleted successfully!")
             return redirect('home')
         else:
-            messages.error(request, "Something went wrong, try again later.")
-            return redirect('home')
+            messages.error(request, "You do not have permission to delete this account.")
+    else:
+        messages.error(request, "You must be logged in to delete an account.")
+    return redirect('home')
 
