@@ -50,7 +50,7 @@ class AddArticleForm(forms.ModelForm):
     )
 
 class CommentForm(forms.ModelForm):
-    text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your comment here ;)'}),
+    text = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter your comment here... MAX LENGTH 200 CHARACTERS !!! '}),
                             max_length=200)
 
     class Meta:

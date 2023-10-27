@@ -12,13 +12,13 @@ def add_article(request):
                 article.author = request.user  # Assign the current user as the author
                 article.save()
                 messages.success(request, "Article added successfully!")
-                return redirect('home')
+                return redirect('user/home')
         else:
             article_form = AddArticleForm()  # Create an empty form for GET requests
-        return render(request, 'add_article.html', {'form': article_form})
+        return render(request, 'article/add_article.html', {'form': article_form})
     else:
         messages.error(request, "You must be logged in to view that page.")
-        return redirect('home')
+        return redirect('user/home')
 
 
 
@@ -28,10 +28,10 @@ def delete_article(request, pk):
         if article_delete.author == request.user:
             article_delete.delete()
             messages.success(request, "Article deleted successfully!")
-            return redirect('home')
+            return redirect('user/home')
         else:
             messages.error(request, "Something went wrong, try again later.")
-            return redirect('home')
+            return redirect('user/home')
 
 def update_article(request, pk):
     if request.user.is_authenticated:
@@ -41,11 +41,11 @@ def update_article(request, pk):
             if article_form.is_valid():
                 article_form.save()
                 messages.success(request, "Article has been successfully updated !")
-                return redirect('home')
-            return render(request, 'update_article.html', {'form':article_form})
+                return redirect('user/home')
+            return render(request, 'article/update_article.html', {'form':article_form})
         else:
             messages.error(request, "Something went wrong, try again later.")
-            return redirect('home')
+            return redirect('user/home')
 
 def article_detail(request, pk):
     if request.user.is_authenticated:
@@ -62,7 +62,7 @@ def article_detail(request, pk):
                 new_comment.save()
                 comment_form = CommentForm()  # Clear the form
 
-        return render(request, 'article.html', {'article': article, 'comments': comments, 'comment_form': comment_form})
+        return render(request, 'article/article.html', {'article': article, 'comments': comments, 'comment_form': comment_form})
     else:
         messages.error(request, "You must be logged in to view that page...")
-        return redirect('home')
+        return redirect('user/home')
