@@ -13,13 +13,13 @@ class ViewsTestCase(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "home.html")
+        self.assertTemplateUsed(response, "user/home.html")
 
     def test_add_article_view(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("add_article"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "add_article.html")
+        self.assertTemplateUsed(response, "article/add_article.html")
 
     def test_article_detail_view(self):
         article = Article.objects.create(
@@ -38,7 +38,7 @@ class ViewsTestCase(TestCase):
     def test_register_user_view(self):
         response = self.client.get(reverse("register"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "register.html")
+        self.assertTemplateUsed(response, "user/register.html")
 
     def test_logout_user_view(self):
         self.client.force_login(self.user)
