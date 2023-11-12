@@ -143,4 +143,12 @@ Follow the prompts to set a username, password, and other details.
 You can start building your blog by creating templates, views, and models in the 'website' app. Customize your blog according to your requirements.
 
 
-## More features
+## Expanded Features:
+
+1. **Advanced Frontend Development:
+** Streamlined and intuitive frontend tools for seamless development.
+
+2. **Customizable Icons:** Access to a diverse range of icons for a personalized touch.
+
+3. **Optimized Project Feature Display:
+** Enhanced presentation of project features for clearer, more engaging visuals.
