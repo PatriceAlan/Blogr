@@ -141,3 +141,6 @@ Follow the prompts to set a username, password, and other details.
 ## Usage
 
 You can start building your blog by creating templates, views, and models in the 'website' app. Customize your blog according to your requirements.
+
+
+## More features
